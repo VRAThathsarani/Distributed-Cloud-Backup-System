@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - "5000:5000"
+    depends_on:
+      - node1
+      - node2
+      - node3
+
+  node1:
+    build: ./node1
+    container_name: node1
+    ports:
+      - "5001:5001"
+
+  node2:
+    build: ./node2
+    container_name: node2
+    ports:
+      - "5002:5002"
+
+  node3:
+    build: ./node3
+    container_name: node3
+    ports:
+      - "5003:5003"
