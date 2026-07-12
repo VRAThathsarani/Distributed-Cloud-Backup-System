@@ -1,127 +1,279 @@
-const API="http://localhost";
+const API = "http://localhost";
 
-async function uploadFile(){
 
-const file=document.getElementById("file").files[0];
+// ---------------------- Upload ----------------------
 
-if(!file){
+async function uploadFile() {
 
-alert("Choose a file");
+    const file = document.getElementById("file").files[0];
 
-return;
+    if (!file) {
+        alert("Please choose a file.");
+        return;
+    }
 
-}
+    const form = new FormData();
+    form.append("file", file);
 
-const form=new FormData();
+    try {
 
-form.append("file",file);
+        const response = await fetch(API + "/upload", {
+            method: "POST",
+            body: form
+        });
 
-const response=await fetch(API+"/upload",{
+        const data = await response.json();
 
-method:"POST",
+        if (response.ok) {
 
-body:form
+            alert(
+                "✅ Upload Successful!\n\n" +
+                "File : " + data.filename +
+                "\nSHA256 : " + data.sha256
+            );
 
-});
+            document.getElementById("file").value = "";
 
-const data=await response.json();
+            loadFiles();
 
-alert(data.message);
+            loadHealth();
 
-loadFiles();
+        } else {
 
-}
+            alert(data.error);
 
-async function loadHealth(){
+        }
 
-const response=await fetch(API+"/health");
+    }
 
-const data=await response.json();
+    catch (error) {
 
-let html="";
+        alert("Upload Failed!");
 
-for(let node in data){
+        console.error(error);
 
-html+=`
-
-<div class="file">
-
-<b>${node}</b><br>
-
-Status : ${data[node].status}
-
-</div>
-
-`;
-
-}
-
-document.getElementById("health").innerHTML=html;
+    }
 
 }
 
-async function loadFiles(){
 
-const response=await fetch(API+"/files");
+// ---------------------- Health ----------------------
 
-const data=await response.json();
+async function loadHealth() {
 
-let html="";
+    try {
 
-for(let node in data){
+        const response = await fetch(API + "/health");
 
-html+=`<h3>${node}</h3>`;
+        const data = await response.json();
 
-data[node].forEach(file=>{
+        let html = "";
 
-html+=`
+        for (let node in data) {
 
-<div class="file">
+            let status = data[node].status;
 
-${file}
+            let icon = status === "healthy"
+                ? "🟢"
+                : "🔴";
 
-<button onclick="downloadFile('${file}')">
+            html += `
 
-Download
+            <div class="health-card">
 
-</button>
+                <h3>${icon} ${node}</h3>
 
-<button onclick="deleteFile('${file}')">
+                <p>Status :
+                <strong>${status}</strong>
+                </p>
 
-Delete
+            </div>
 
-</button>
+            `;
 
-</div>
+        }
 
-`;
+        document.getElementById("health").innerHTML = html;
 
-});
+    }
 
-}
+    catch (error) {
 
-document.getElementById("files").innerHTML=html;
+        document.getElementById("health").innerHTML =
+            "<p>Unable to connect to Gateway.</p>";
 
-}
-
-function downloadFile(file){
-
-window.location=API+"/download/"+file;
-
-}
-
-async function deleteFile(file){
-
-await fetch(API+"/delete/"+file,{
-
-method:"DELETE"
-
-});
-
-loadFiles();
+    }
 
 }
 
-loadHealth();
 
-loadFiles();
+// ---------------------- Files ----------------------
+
+async function loadFiles() {
+
+    try {
+
+        const response = await fetch(API + "/files");
+
+        const data = await response.json();
+
+        let html = "";
+
+        for (let node in data) {
+
+            html += `
+                <h3 style="
+                color:#A98B76;
+                margin-top:20px;
+                margin-bottom:10px;
+                ">
+                ${node}
+                </h3>
+            `;
+
+            if (Array.isArray(data[node]) && data[node].length > 0) {
+
+                data[node].forEach(file => {
+
+                    html += `
+
+                    <div class="file-card">
+
+                        <div class="file-name">
+
+                            📄 ${file}
+
+                        </div>
+
+                        <div class="file-buttons">
+
+                            <button
+                            class="download"
+                            onclick="downloadFile('${file}')">
+
+                            Download
+
+                            </button>
+
+                            <button
+                            class="delete"
+                            onclick="deleteFile('${file}')">
+
+                            Delete
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    `;
+
+                });
+
+            }
+
+            else {
+
+                html += `
+
+                <div class="file-card">
+
+                    No files found.
+
+                </div>
+
+                `;
+
+            }
+
+        }
+
+        document.getElementById("files").innerHTML = html;
+
+    }
+
+    catch (error) {
+
+        document.getElementById("files").innerHTML =
+            "<p>Unable to load files.</p>";
+
+    }
+
+}
+
+
+// ---------------------- Download ----------------------
+
+function downloadFile(filename) {
+
+    window.location = API + "/download/" + filename;
+
+}
+
+
+// ---------------------- Delete ----------------------
+
+async function deleteFile(filename) {
+
+    const confirmDelete = confirm(
+        "Delete " + filename + " ?"
+    );
+
+    if (!confirmDelete)
+        return;
+
+    try {
+
+        const response = await fetch(
+            API + "/delete/" + filename,
+            {
+                method: "DELETE"
+            }
+        );
+
+        const data = await response.json();
+
+        alert(data.message);
+
+        loadFiles();
+
+        loadHealth();
+
+    }
+
+    catch (error) {
+
+        alert("Delete Failed!");
+
+    }
+
+}
+
+
+// ---------------------- Auto Load ----------------------
+
+window.onload = function () {
+
+    loadHealth();
+
+    loadFiles();
+
+};
+
+function showFileName(){
+
+    const file=document.getElementById("file").files[0];
+
+    if(file){
+
+        document.getElementById("fileName").innerHTML=file.name;
+
+    }
+    else{
+
+        document.getElementById("fileName").innerHTML="No file selected";
+
+    }
+
+}

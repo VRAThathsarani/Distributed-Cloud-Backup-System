@@ -1,45 +1,349 @@
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+
+}
+
 body{
 
-font-family:Arial;
+font-family:'Poppins',sans-serif;
 
-background:#f4f4f4;
+background:#F3E4C9;
+
+color:#444;
 
 }
 
 .container{
 
-width:900px;
+width:90%;
+
+max-width:1200px;
 
 margin:auto;
 
-background:white;
+padding:40px;
 
-padding:30px;
+}
+
+header{
+
+text-align:center;
+
+margin-bottom:35px;
+
+}
+
+header h1{
+
+font-size:38px;
+
+color:#A98B76;
+
+margin-bottom:10px;
+
+}
+
+header p{
+
+color:#777;
+
+font-size:18px;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:30px;
 
 margin-top:30px;
 
-border-radius:10px;
+}
 
-box-shadow:0px 0px 15px gray;
+.card{
+
+background:white;
+
+padding:25px;
+
+border-radius:18px;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.card-title{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:20px;
+
+}
+
+h2{
+
+color:#A98B76;
+
+}
+
+input[type=file]{
+
+width:100%;
+
+padding:15px;
+
+border:2px dashed #BABF94;
+
+border-radius:12px;
+
+margin:20px 0;
+
+background:#fff;
 
 }
 
 button{
 
-padding:10px;
+background:#A98B76;
 
-margin:10px;
+color:white;
+
+border:none;
+
+padding:12px 20px;
+
+border-radius:10px;
 
 cursor:pointer;
 
+font-size:15px;
+
+transition:.3s;
+
 }
 
-.file{
+button:hover{
 
-border:1px solid gray;
+background:#BFA28C;
 
-padding:10px;
+transform:translateY(-2px);
 
-margin-top:10px;
+}
+
+.health-card{
+
+background:#F3E4C9;
+
+padding:15px;
+
+border-left:6px solid #BABF94;
+
+margin-bottom:15px;
+
+border-radius:10px;
+
+}
+
+.file-card{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px;
+
+background:#F3E4C9;
+
+margin-top:12px;
+
+border-radius:10px;
+
+}
+
+.file-name{
+
+font-weight:500;
+
+}
+
+.file-buttons button{
+
+margin-left:8px;
+
+padding:8px 15px;
+
+font-size:13px;
+
+}
+
+.download{
+
+background:#BABF94;
+
+}
+
+.download:hover{
+
+background:#9da475;
+
+}
+
+.delete{
+
+background:#BFA28C;
+
+}
+
+.delete:hover{
+
+background:#a5856e;
+
+}
+
+@media(max-width:900px){
+
+.grid{
+
+grid-template-columns:1fr;
+
+}
+
+header h1{
+
+font-size:30px;
+
+}
+
+}
+
+/* ---------- Upload Section ---------- */
+
+.upload-area{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+margin-top:20px;
+
+}
+
+.upload-box{
+
+width:100%;
+
+padding:40px;
+
+border:3px dashed #BABF94;
+
+border-radius:18px;
+
+background:#FCF8F1;
+
+cursor:pointer;
+
+transition:.3s;
+
+text-align:center;
+
+}
+
+.upload-box:hover{
+
+background:#F3E4C9;
+
+border-color:#A98B76;
+
+transform:scale(1.01);
+
+}
+
+.upload-icon{
+
+font-size:55px;
+
+margin-bottom:15px;
+
+}
+
+.upload-box h3{
+
+color:#A98B76;
+
+margin-bottom:8px;
+
+}
+
+.upload-box p{
+
+color:#666;
+
+margin-bottom:15px;
+
+}
+
+#fileName{
+
+display:inline-block;
+
+background:#BABF94;
+
+color:white;
+
+padding:8px 18px;
+
+border-radius:20px;
+
+font-size:14px;
+
+font-weight:500;
+
+}
+
+.upload-btn{
+
+margin-top:25px;
+
+width:220px;
+
+padding:15px;
+
+font-size:17px;
+
+font-weight:600;
+
+background:#A98B76;
+
+border:none;
+
+border-radius:12px;
+
+color:white;
+
+transition:.3s;
+
+}
+
+.upload-btn:hover{
+
+background:#BFA28C;
+
+transform:translateY(-3px);
+
+box-shadow:0 10px 25px rgba(0,0,0,.15);
 
 }

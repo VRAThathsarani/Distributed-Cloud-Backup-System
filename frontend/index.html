@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-<head><meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Distributed Cloud Backup System</title>
 
     <link rel="stylesheet" href="style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -14,36 +19,130 @@
 
 <div class="container">
 
-<h1>Distributed Cloud Backup System</h1>
+    <!-- ================= HEADER ================= -->
 
-<label for="file" class="visually-hidden">Choose file to upload</label>
-<input type="file" id="file" title="Choose file to upload" aria-label="Choose file to upload">
+    <header>
 
-<button onclick="uploadFile()">
+        <h1>☁ Distributed Cloud Backup System</h1>
 
-Upload File
+        <p>
+            Secure • Distributed • Fault Tolerant • Cloud Storage
+        </p>
 
-</button>
+    </header>
 
-<h2>System Status</h2>
+    <!-- ================= UPLOAD ================= -->
 
-<button onclick="loadHealth()">
+    <section class="card">
 
-Refresh Status
+        <h2>Upload File</h2>
 
-</button>
+        <p class="upload-text">
+            Select a file to replicate across all storage nodes.
+        </p>
 
-<div id="health"></div>
+        <div class="upload-area">
 
-<h2>Files</h2>
+            <label for="file" class="upload-box">
 
-<button onclick="loadFiles()">
+                <div class="upload-icon">
+                    ☁️
+                </div>
 
-Refresh Files
+                <h3>Choose Your File</h3>
 
-</button>
+                <p>
+                    Click here to browse files
+                </p>
 
-<div id="files"></div>
+                <span id="fileName">
+
+                    No file selected
+
+                </span>
+
+            </label>
+
+            <input
+                type="file"
+                id="file"
+                hidden
+                onchange="showFileName()"
+            >
+
+            <button
+                class="upload-btn"
+                onclick="uploadFile()">
+
+                ⬆ Upload File
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ================= STATUS + FILES ================= -->
+
+    <div class="grid">
+
+        <!-- Health -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <h2>🖥 System Health</h2>
+
+                <button onclick="loadHealth()">
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+            <div id="health">
+
+            </div>
+
+        </section>
+
+        <!-- Files -->
+
+        <section class="card">
+
+            <div class="card-title">
+
+                <h2>📁 Stored Files</h2>
+
+                <button onclick="loadFiles()">
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+            <div id="files">
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+
+            Distributed Cloud Backup System © 2026
+
+        </p>
+
+    </footer>
 
 </div>
 
