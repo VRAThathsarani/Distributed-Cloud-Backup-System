@@ -1,11 +1,16 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 import requests
 import logging
 
-from config import NODES
+from config_docker import NODES
+# from config_local import NODES
 from utils import calculate_sha256
 
 app = Flask(__name__)
+
+# Enable CORS
+CORS(app)
 
 logging.basicConfig(level=logging.INFO)
 
@@ -61,10 +66,10 @@ def upload():
     if uploaded_file.filename == "":
         return jsonify({"error": "No file selected"}), 400
 
-    # Read file
+    # Read uploaded file
     file_data = uploaded_file.read()
 
-    # Calculate SHA256 Hash
+    # Calculate SHA-256 checksum
     checksum = calculate_sha256(file_data)
 
     results = {}

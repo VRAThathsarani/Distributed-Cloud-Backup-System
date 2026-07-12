@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
+
+<head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Distributed Cloud Backup</title>
+
+    <title>Distributed Cloud Backup System</title>
+
+    <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
+
+<div class="container">
 
 <h1>Distributed Cloud Backup System</h1>
 
-<form id="uploadForm">
-    <label for="fileInput">Select a file:</label>
-    <input type="file" id="fileInput" required>
-    <button type="submit">Upload</button>
-</form>
+<label for="file" class="visually-hidden">Choose file to upload</label>
+<input type="file" id="file" title="Choose file to upload" aria-label="Choose file to upload">
 
-<p id="status"></p>
+<button onclick="uploadFile()">
+
+Upload File
+
+</button>
+
+<h2>System Status</h2>
+
+<button onclick="loadHealth()">
+
+Refresh Status
+
+</button>
+
+<div id="health"></div>
+
+<h2>Files</h2>
+
+<button onclick="loadFiles()">
+
+Refresh Files
+
+</button>
+
+<div id="files"></div>
+
+</div>
 
 <script src="script.js"></script>
 
 </body>
+
 </html>
