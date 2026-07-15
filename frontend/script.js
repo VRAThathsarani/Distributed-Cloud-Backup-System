@@ -1,4 +1,4 @@
-const API = "http://localhost";
+const API = "";
 
 
 // ---------------------- Upload ----------------------

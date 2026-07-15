@@ -90,7 +90,7 @@ def upload():
 
             response = requests.post(
                 f"{url}/upload",
-                files=files
+                files=files, timeout=10
             )
 
             results[name] = response.json()
@@ -120,7 +120,7 @@ def get_all_files():
 
         try:
 
-            response = requests.get(f"{url}/files")
+            response = requests.get(f"{url}/files", timeout=5)
 
             all_files[name] = response.json()
 
@@ -144,7 +144,7 @@ def download(filename):
 
             response = requests.get(
                 f"{node}/download/{filename}",
-                stream=True
+                stream=True, timeout=10
             )
 
             if response.status_code == 200:
@@ -154,7 +154,10 @@ def download(filename):
                     200,
                     {
                         "Content-Disposition":
-                        f'attachment; filename="{filename}"'
+                        f'attachment; filename="{filename}"',
+                        "Content-Type": response.headers.get(
+                            "Content-Type", "application/octet-stream"
+                        )
                     }
                 )
 
@@ -178,7 +181,7 @@ def delete(filename):
         try:
 
             response = requests.delete(
-                f"{url}/delete/{filename}"
+                f"{url}/delete/{filename}", timeout=5
             )
 
             results[name] = response.json()
